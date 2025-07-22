@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from './Header'; // Import the Header component
-import ArmExercise from '../assets/ArmExercise.png'; // Assuming this path is correct for your image
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import Header from './Header';
+import ArmExercise from '../assets/ArmExercise.png';
+import { useNavigate } from 'react-router-dom';
 
 // Styled Components for the Workouts Page
 const MainContainer = styled.div`
-  margin-left: 250px; /* Accounts for the fixed sidebar width */
-  padding: 2rem;
+  margin-left: 250px; /* Matches Sidebar width */
+  padding: 2rem 2rem 2rem 1rem; /* Reduced left padding to 1rem */
   background: #f5f5f5;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif; /* Ensure consistent font */
+  font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    margin-left: 0; /* Remove margin for mobile */
+    padding: 1rem;
+  }
 `;
 
 const SectionContainer = styled.div`
@@ -36,7 +42,7 @@ const SectionTitle = styled.h3`
 `;
 
 const AddWorkoutButton = styled.button`
-  background: #9C49CF; /* Purple color */
+  background: #9C49CF;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -48,20 +54,20 @@ const AddWorkoutButton = styled.button`
   align-items: center;
   gap: 0.5rem;
   &:hover {
-    background: #800080; /* Darker purple on hover */
+    background: #800080;
   }
 `;
 
 const WorkoutGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Responsive grid for workouts */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1rem;
 `;
 
 const WorkoutCard = styled.div`
   position: relative;
   width: 100%;
-  padding-bottom: 120%; /* Aspect ratio for the image */
+  padding-bottom: 120%;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -81,7 +87,7 @@ const WorkoutOverlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(128, 0, 128, 0.85); /* Purple-800 with opacity */
+  background: rgba(128, 0, 128, 0.85);
   color: white;
   padding: 0.75rem;
   border-bottom-left-radius: 12px;
@@ -121,7 +127,7 @@ const CardActionButton = styled.button`
 `;
 
 const WorkoutsPage: React.FC = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const workouts = [
     { name: 'Arms Exercise', time: '20 min', burn: '95 kcal', image: ArmExercise },
@@ -135,14 +141,12 @@ const WorkoutsPage: React.FC = () => {
   ];
 
   const handleAddWorkoutClick = () => {
-    navigate('/add-workout'); // Navigate to the new Add Workout page
+    navigate('/add-workout');
   };
 
   return (
     <MainContainer>
-      <Header /> {/* Using the external Header component */}
-
-      {/* Workouts Section */}
+      <Header />
       <SectionContainer>
         <SectionHeader>
           <SectionTitle>Workouts</SectionTitle>
@@ -153,12 +157,12 @@ const WorkoutsPage: React.FC = () => {
         <WorkoutGrid>
           {workouts.map((workout, index) => (
             <WorkoutCard key={index}>
-              <CardActionButton>🗑️</CardActionButton> {/* Delete icon */}
+              <CardActionButton>🗑️</CardActionButton>
               <WorkoutImage
                 src={workout.image}
                 alt={workout.name}
                 onError={(e) => {
-                  e.currentTarget.src = "https://placehold.co/160x192/cccccc/333333?text=No+Image"; // Fallback image
+                  e.currentTarget.src = "https://placehold.co/160x192/cccccc/333333?text=No+Image";
                 }}
               />
               <WorkoutOverlay>

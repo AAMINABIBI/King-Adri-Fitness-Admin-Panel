@@ -1,16 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from './Header'; // Import the Header component
+import Header from './Header';
 
 // Styled Components for the Diet Plan Page
 const MainContainer = styled.div`
-  margin-left: 250px; /* Accounts for the fixed sidebar width */
-  padding: 2rem;
+  margin-left: 250px; /* Matches Sidebar width */
+  padding: 2rem 2rem 2rem 1rem; /* Reduced left padding to 1rem */
   background: #f5f5f5;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif; /* Ensure consistent font */
+  font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    margin-left: 0; /* Remove margin for mobile */
+    padding: 1rem;
+  }
 `;
 
 const SectionContainer = styled.div`
@@ -39,15 +45,15 @@ const StyledTable = styled.table`
   th, td {
     padding: 0.75rem;
     text-align: left;
-    border-bottom: 1px solid #e5e7eb; /* Gray-200 */
+    border-bottom: 1px solid #e5e7eb;
   }
   th {
-    background: #f3e8ff; /* Purple-100 */
-    color: #374151; /* Gray-700 */
+    background: #f3e8ff;
+    color: #374151;
     font-weight: 600;
   }
   tbody tr:nth-child(even) {
-    background: #fbf5fe; /* Lighter purple for even rows */
+    background: #fbf5fe;
   }
   tbody tr:last-child {
     border-bottom: none;
@@ -72,9 +78,7 @@ const DietPlanPage: React.FC = () => {
 
   return (
     <MainContainer>
-      <Header /> {/* Using the external Header component */}
-
-      {/* Diet Plan Section */}
+      <Header />
       <SectionContainer>
         <SectionHeader>
           <SectionTitle>Diet Plan</SectionTitle>

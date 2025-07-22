@@ -2,15 +2,21 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from './Header'; // Import the Header component
 
-// Styled Components (copied from Dashboard.tsx for consistency)
+// Styled Components (updated for consistency and responsiveness)
 const MainContainer = styled.div`
-  margin-left: 250px; /* Accounts for the fixed sidebar width */
-  padding: 2rem;
+  margin-left: 250px; /* Matches Sidebar width */
+  padding: 2rem 2rem 2rem 1rem; /* Reduced left padding to 1rem */
   background: #f5f5f5;
   min-height: 100vh;
   font-family: 'Inter', sans-serif; /* Ensure consistent font */
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    margin-left: 0; /* Remove margin for mobile */
+    padding: 1rem;
+  }
 `;
 
 const UserTableSection = styled.div`
@@ -109,7 +115,7 @@ const ActionButton = styled.button`
   }
 `;
 
-// New Styled Components for the Modal
+// Modal Styled Components
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -221,24 +227,20 @@ const ModalButton = styled.button<{ primary?: boolean }>`
   font-size: 1rem;
   font-weight: 600;
   transition: background-color 0.2s ease;
-
   background: ${props => (props.primary ? '#9C49CF' : '#e0e0e0')};
   color: ${props => (props.primary ? 'white' : '#333')};
-
   &:hover {
     background: ${props => (props.primary ? '#800080' : '#c0c0c0')};
   }
 `;
-
 
 const UserInformationPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null); // State to hold user data for modal
 
   const users = [
-    { sl: 1, registeredOn: 'July 23, 2023', name: 'John Willson', gender: 'Male', email: 'john@gmail.com', status: 'SUBSCRIBER', dob: '25-23-2020', weight: '50 KGs', height: '176 cms', subscription: 'Basic Gym Monthly', phone: '+78405057379', avatar: 'https://placehold.co/100x100/A855F7/ffffff?text=JW' }, // Added more data
-    { sl: 2, registeredOn: 'Aug 5, 2023', name: 'Selena Gomez', gender: 'Female', email: 'selena@gmail.com', status: 'SUBSCRIBER', dob: '10-01-1995', weight: '55 KGs', height: '165 cms', subscription: 'Premium Plan Yearly', phone: '+1234567890', avatar: 'https://placehold.co/100x100/A855F7/ffffff?text=SG' }, // Added more data
-    // Add more user data as needed
+    { sl: 1, registeredOn: 'July 23, 2023', name: 'John Willson', gender: 'Male', email: 'john@gmail.com', status: 'SUBSCRIBER', dob: '25-23-2020', weight: '50 KGs', height: '176 cms', subscription: 'Basic Gym Monthly', phone: '+78405057379', avatar: 'https://placehold.co/100x100/A855F7/ffffff?text=JW' },
+    { sl: 2, registeredOn: 'Aug 5, 2023', name: 'Selena Gomez', gender: 'Female', email: 'selena@gmail.com', status: 'SUBSCRIBER', dob: '10-01-1995', weight: '55 KGs', height: '165 cms', subscription: 'Premium Plan Yearly', phone: '+1234567890', avatar: 'https://placehold.co/100x100/A855F7/ffffff?text=SG' },
   ];
 
   const handleViewClick = (user: any) => {
@@ -253,7 +255,7 @@ const UserInformationPage: React.FC = () => {
 
   return (
     <MainContainer>
-      <Header /> {/* Using the external Header component */}
+      <Header />
       <UserTableSection>
         <TableHeader>
           <h3 style={{ fontSize: '1.25rem', color: '#333' }}>User Information</h3>
@@ -284,7 +286,6 @@ const UserInformationPage: React.FC = () => {
                 <td>{user.email}</td>
                 <td><StatusBadge>{user.status}</StatusBadge></td>
                 <td>
-                  {/* Changed edit icon to view icon and added onClick handler */}
                   <ActionButton onClick={() => handleViewClick(user)}>👁️</ActionButton>
                   <ActionButton>🗑️</ActionButton>
                 </td>
@@ -293,8 +294,6 @@ const UserInformationPage: React.FC = () => {
           </tbody>
         </StyledTable>
       </UserTableSection>
-
-      {/* User Information Modal */}
       {isModalOpen && selectedUser && (
         <ModalOverlay>
           <ModalContent>

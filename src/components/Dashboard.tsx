@@ -10,41 +10,53 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import styled from 'styled-components'; // Import styled-components
-import Header from './Header'; // Importing the Header component
-import ArmExercise from '../assets/ArmExercise.png'; // Correctly import the image
+import styled from 'styled-components';
+import Header from './Header';
+import ArmExercise from '../assets/ArmExercise.png';
 
 // Register ChartJS components for Line chart
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 // Styled Components for Dashboard
 const MainContainer = styled.div`
-  margin-left: 250px; /* Accounts for the fixed sidebar width */
-  padding: 2rem;
+  margin-left: 250px; /* Matches Sidebar width */
+  padding: 2rem 2rem 2rem 1rem; /* Reduced left padding to 1rem */
   background: #f5f5f5;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif; /* Ensure consistent font */
+  font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    margin-left: 0; /* Remove margin for mobile */
+    padding: 1rem;
+  }
 `;
 
 const ContentWrapper = styled.div`
   display: flex;
   gap: 2rem;
-  flex-wrap: wrap; /* Allow wrapping for responsiveness */
+  flex-wrap: wrap;
 `;
 
 const LeftColumn = styled.div`
   flex: 3;
-  min-width: 600px; /* Adjust minimum width for responsiveness */
+  min-width: 600px;
+  @media (max-width: 768px) {
+    min-width: 100%;
+  }
 `;
 
 const RightColumn = styled.div`
   flex: 1;
-  min-width: 250px; /* Adjust minimum width for responsiveness */
+  min-width: 250px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  @media (max-width: 768px) {
+    min-width: 100%;
+  }
 `;
 
 const OverviewSection = styled.div`
@@ -95,7 +107,7 @@ const EarningsGrid = styled.div`
 `;
 
 const PlanCard = styled.div`
-  background: #800080; /* Purple color from the image */
+  background: #800080;
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
@@ -125,22 +137,22 @@ const SearchInputContainer = styled.div`
 `;
 
 const SearchInput = styled.input`
-  padding: 0.6rem 1rem 0.6rem 2.5rem; /* Left padding for icon */
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
   border-radius: 6px;
-  background: #e5e7eb; /* Gray-200 */
+  background: #e5e7eb;
   border: none;
   outline: none;
-  color: #374151; /* Gray-700 */
-  width: 200px; /* Adjust width as needed */
+  color: #374151;
+  width: 200px;
   &::placeholder {
-    color: #6b7280; /* Gray-500 */
+    color: #6b7280;
   }
 `;
 
 const SearchIcon = styled.span`
   position: absolute;
   left: 1rem;
-  color: #6b7280; /* Gray-500 */
+  color: #6b7280;
 `;
 
 const StyledTable = styled.table`
@@ -149,15 +161,15 @@ const StyledTable = styled.table`
   th, td {
     padding: 0.75rem;
     text-align: left;
-    border-bottom: 1px solid #e5e7eb; /* Gray-200 */
+    border-bottom: 1px solid #e5e7eb;
   }
   th {
-    background: #f3e8ff; /* Purple-100 */
-    color: #374151; /* Gray-700 */
+    background: #f3e8ff;
+    color: #374151;
     font-weight: 600;
   }
   tbody tr:nth-child(even) {
-    background: #fbf5fe; /* Lighter purple for even rows */
+    background: #fbf5fe;
   }
   tbody tr:last-child {
     border-bottom: none;
@@ -167,19 +179,19 @@ const StyledTable = styled.table`
 `;
 
 const StatusBadge = styled.span`
-  background: #e9d5ff; /* Purple-200 */
-  color: #800080; /* Purple-800 */
+  background: #e9d5ff;
+  color: #800080;
   padding: 0.25rem 0.75rem;
-  border-radius: 9999px; /* Full rounded */
+  border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
 `;
 
 const ActionButton = styled.button`
-  background: #d8b4fe; /* Purple-300 */
-  color: #800080; /* Purple-800 */
+  background: #d8b4fe;
+  color: #800080;
   padding: 0.5rem;
-  border-radius: 9999px; /* Full rounded */
+  border-radius: 9999px;
   border: none;
   cursor: pointer;
   margin-right: 0.5rem;
@@ -188,13 +200,13 @@ const ActionButton = styled.button`
   align-items: center;
   justify-content: center;
   &:hover {
-    background: #c084fc; /* Darker purple on hover */
+    background: #c084fc;
   }
   &:last-child {
-    background: #fca5a5; /* Red-300 */
-    color: #b91c1c; /* Red-800 */
+    background: #fca5a5;
+    color: #b91c1c;
     &:hover {
-      background: #ef4444; /* Darker red on hover */
+      background: #ef4444;
     }
   }
 `;
@@ -208,14 +220,14 @@ const WorkoutGridSection = styled.div`
 
 const WorkoutGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjusted for 5 columns */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1rem;
 `;
 
 const WorkoutCard = styled.div`
   position: relative;
   width: 100%;
-  padding-bottom: 120%; /* Aspect ratio for the image */
+  padding-bottom: 120%;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -235,7 +247,7 @@ const WorkoutOverlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(128, 0, 128, 0.85); /* Purple-800 with opacity */
+  background: rgba(128, 0, 128, 0.85);
   color: white;
   padding: 0.75rem;
   border-bottom-left-radius: 12px;
@@ -254,50 +266,14 @@ const WorkoutDetails = styled.div`
   opacity: 0.9;
 `;
 
-// New Styled Components for Basic and Premium Plan cards
-const PlanSummaryCard = styled.div<{ background: string }>`
-  background: ${props => props.background};
-  color: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const PlanIcon = styled.div`
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  padding: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 1rem;
-  font-size: 1.5rem;
-`;
-
-const PlanText = styled.div`
-  flex-grow: 1;
-  font-size: 1.1rem;
-  font-weight: 500;
-`;
-
-const PlanCount = styled.div`
-  font-size: 2.5rem;
-  font-weight: bold;
-`;
-
-
-// Dashboard Component
 const Dashboard: React.FC = () => {
   const chartData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], // Adjusted labels based on image
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [
       {
         label: 'New',
-        data: [10, 20, 15, 25, 20, 30], // Sample data for 'New' line
-        borderColor: '#800080', // Purple line
+        data: [10, 20, 15, 25, 20, 30],
+        borderColor: '#800080',
         backgroundColor: 'rgba(128, 0, 128, 0.2)',
         tension: 0.4,
         pointRadius: 5,
@@ -307,8 +283,8 @@ const Dashboard: React.FC = () => {
       },
       {
         label: 'Old',
-        data: [20, 15, 25, 18, 28, 22], // Sample data for 'Old' line
-        borderColor: '#FFD700', // Gold/Yellow line
+        data: [20, 15, 25, 18, 28, 22],
+        borderColor: '#FFD700',
         backgroundColor: 'rgba(255, 215, 0, 0.2)',
         tension: 0.4,
         pointRadius: 5,
@@ -319,7 +295,7 @@ const Dashboard: React.FC = () => {
     ],
   };
 
-  const chartOptions: any = { // Using 'any' for chartOptions due to complex Chart.js types
+  const chartOptions: any = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -340,12 +316,12 @@ const Dashboard: React.FC = () => {
         ticks: {
           color: '#333',
           callback: function (value: number) {
-            return value; // No dollar sign in the image for Y-axis
+            return value;
           },
         },
         grid: {
           color: '#eee',
-          borderDash: [5, 5], // Dashed grid lines
+          borderDash: [5, 5],
         },
       },
       x: {
@@ -362,7 +338,6 @@ const Dashboard: React.FC = () => {
   const users = [
     { sl: 1, registeredOn: 'July 23, 2023', name: 'John', gender: 'Female', email: 'john@gmail.com', status: 'SUBSCRIBER' },
     { sl: 2, registeredOn: 'Aug 5, 2023', name: 'Selena', gender: 'Female', email: 'selena@gmail.com', status: 'SUBSCRIBER' },
-    // Add more user data as needed
   ];
 
   const workouts = [
@@ -375,11 +350,9 @@ const Dashboard: React.FC = () => {
 
   return (
     <MainContainer>
-      <Header /> {/* Using the external Header component */}
-
+      <Header />
       <ContentWrapper>
         <LeftColumn>
-          {/* Dashboard Overview */}
           <OverviewSection>
             <OverviewHeader>
               <div>
@@ -393,7 +366,6 @@ const Dashboard: React.FC = () => {
                 <TabButton>Yearly</TabButton>
               </div>
             </OverviewHeader>
-
             <ChartAndStats>
               <StatsColumn>
                 <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '0.5rem' }}>Current Month Earnings</div>
@@ -404,17 +376,13 @@ const Dashboard: React.FC = () => {
                 <Line data={chartData} options={chartOptions} />
               </div>
             </ChartAndStats>
-
             <EarningsGrid>
               <PlanCard>Wallet Balance<br />$4,567.53</PlanCard>
               <PlanCard>This Month Earnings<br />$1,699.53</PlanCard>
               <PlanCard>Personal Trainers<br />$2,951.53</PlanCard>
               <PlanCard>Earning<br />$2,567.53</PlanCard>
             </EarningsGrid>
-            
           </OverviewSection>
-
-          {/* User Information Table */}
           <UserTableSection>
             <TableHeader>
               <h3 style={{ fontSize: '1.25rem', color: '#333' }}>User Information</h3>
@@ -453,8 +421,6 @@ const Dashboard: React.FC = () => {
               </tbody>
             </StyledTable>
           </UserTableSection>
-
-          {/* Workout Information Grid */}
           <WorkoutGridSection>
             <TableHeader>
               <h3 style={{ fontSize: '1.25rem', color: '#333' }}>Workout Information</h3>
@@ -470,7 +436,7 @@ const Dashboard: React.FC = () => {
                     src={workout.image}
                     alt={workout.name}
                     onError={(e) => {
-                      e.currentTarget.src = "https://placehold.co/160x192/cccccc/333333?text=No+Image"; // Fallback image
+                      e.currentTarget.src = "https://placehold.co/160x192/cccccc/333333?text=No+Image";
                     }}
                   />
                   <WorkoutOverlay>
@@ -482,8 +448,6 @@ const Dashboard: React.FC = () => {
             </WorkoutGrid>
           </WorkoutGridSection>
         </LeftColumn>
-
-      
       </ContentWrapper>
     </MainContainer>
   );

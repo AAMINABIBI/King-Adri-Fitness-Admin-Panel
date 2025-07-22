@@ -10,16 +10,17 @@ const SidebarContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  padding: 2rem 1rem;
+  padding: 1rem 0; /* Reduced padding to minimize gaps */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   color: white;
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
 `;
 
 const Logo = styled.img`
   width: 150px;
-  margin: 1rem; /* Increased margin to match spacing in image */
+  margin: 1rem auto; /* Center logo and reduce vertical margin */
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -27,15 +28,15 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   color: white;
   text-decoration: none;
-  margin-bottom: 1rem; /* Adjusted margin to match spacing */
-  border: none;
+  margin: 0.5rem 1rem; /* Reduced margin for tighter spacing */
   border-radius: 5px;
   font-size: 1rem;
   background: none;
   cursor: pointer;
   text-align: left;
-  width: 100%; /* Ensure full width for consistent look */
-  padding: 0.5rem 1rem; /* Add padding for better click area */
+  width: calc(100% - 2rem); /* Account for margin */
+  padding: 0.5rem 1rem; /* Consistent padding */
+  box-sizing: border-box;
 
   &:hover {
     background: #dbd8ddff; /* Slightly lighter purple for hover effect */
@@ -51,7 +52,7 @@ const Footer = styled.div`
   font-size: 0.875rem;
   text-align: center;
   color: white;
-  margin-top: 2rem; /* Adjusted margin to match spacing */
+  margin: 1rem 0; /* Reduced margin for tighter spacing */
 `;
 
 const Sidebar: React.FC = () => {
@@ -62,7 +63,7 @@ const Sidebar: React.FC = () => {
         <StyledNavLink to="/dashboard">
           <span role="img" aria-label="dashboard">📋</span> Dashboard
         </StyledNavLink>
-        <StyledNavLink to="/users"> {/* Updated to navigate to /users */}
+        <StyledNavLink to="/users">
           <span role="img" aria-label="users">👥</span> Users
         </StyledNavLink>
         <StyledNavLink to="/subscriptions">

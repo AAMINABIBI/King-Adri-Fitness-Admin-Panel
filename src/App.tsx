@@ -1,36 +1,56 @@
 import React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import LoginScreen from './components/LoginScreen'; // Assuming you have this component
+import styled from 'styled-components';
+import LoginScreen from './components/LoginScreen';
 import Dashboard from './components/Dashboard';
-import Sidebar from './components/Sidebar'; // Importing your Sidebar component
-import UserInformationPage from './components/UserInformationPage'; // Corrected relative import path
+import Sidebar from './components/Sidebar';
+import UserInformationPage from './components/UserInformationPage';
 import SubscriptionsPage from './components/SubscriptionsPage';
 import CommunityPage from './components/CommunityPage';
 import DietPlanPage from './components/DietPlanPage';
 import WorkoutsPage from './components/WorkoutsPage';
-import AddWorkoutPage from './components/AddWorkoutPage'; // New: Import the AddWorkoutPage
+import AddWorkoutPage from './components/AddWorkoutPage';
+
+// Container for the app layout with Sidebar and main content
+const AppContainer = styled.div`
+  display: flex;
+  min-height: 100vh;
+`;
+
+// Main content area that adjusts based on Sidebar presence
+const MainContent = styled.main`
+  flex: 1;
+  padding: 20px;
+  background: #ffffff;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
+`;
 
 const App: React.FC = () => {
   const location = useLocation();
+  const isLoginPage = location.pathname === '/' || location.pathname === '/login';
 
   return (
-    <>
-      {/* Tailwind CSS CDN for styling */}
-      <script src="https://cdn.tailwindcss.com"></script>
-      {/* Conditionally render Sidebar only on the dashboard, users, subscriptions, community, diet plan, and workouts paths */}
-      {(location.pathname === '/dashboard' || location.pathname === '/users' || location.pathname === '/subscriptions' || location.pathname === '/community' || location.pathname === '/diet-plan' || location.pathname === '/workouts' || location.pathname === '/add-workout') && <Sidebar />}
-      <Routes>
-        <Route path="/login" element={<LoginScreen />} />
-        <Route path="/" element={<LoginScreen />} /> {/* Default route */}
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/users" element={<UserInformationPage />} />
-        <Route path="/subscriptions" element={<SubscriptionsPage />} />
-        <Route path="/community" element={<CommunityPage />} />
-        <Route path="/diet-plan" element={<DietPlanPage />} />
-        <Route path="/workouts" element={<WorkoutsPage />} />
-        <Route path="/add-workout" element={<AddWorkoutPage />} /> {/* New: Route for Add Workout Page */}
-      </Routes>
-    </>
+    <AppContainer>
+      {/* Show Sidebar only on non-login pages */}
+      {!isLoginPage && <Sidebar />}
+      <MainContent>
+        <Routes>
+          <Route path="/login" element={<LoginScreen />} />
+          <Route path="/" element={<LoginScreen />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/users" element={<UserInformationPage />} />
+          <Route path="/subscriptions" element={<SubscriptionsPage />} />
+          <Route path="/community" element={<CommunityPage />} />
+          <Route path="/diet-plan" element={<DietPlanPage />} />
+          <Route path="/workouts" element={<WorkoutsPage />} />
+          <Route path="/add-workout" element={<AddWorkoutPage />} />
+        </Routes>
+      </MainContent>
+    </AppContainer>
   );
 };
 

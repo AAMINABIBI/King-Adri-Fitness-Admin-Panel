@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from './Header'; // Import the Header component
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import Header from './Header';
+import { useNavigate } from 'react-router-dom';
 
 // Styled Components for the Add Exercise Form Page
 const MainContainer = styled.div`
-  margin-left: 250px; /* Accounts for the fixed sidebar width */
-  padding: 2rem;
+  margin-left: 250px; /* Matches Sidebar width */
+  padding: 2rem 2rem 2rem 1rem; /* Reduced left padding to 1rem */
   background: #f5f5f5;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif; /* Ensure consistent font */
+  font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    margin-left: 0; /* Remove margin for mobile */
+    padding: 1rem;
+  }
 `;
 
 const FormContainer = styled.div`
@@ -20,8 +26,8 @@ const FormContainer = styled.div`
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   width: 90%;
-  max-width: 800px; /* Adjusted max-width for the form */
-  margin: 0 auto; /* Center the form */
+  max-width: 800px;
+  margin: 0 auto;
 `;
 
 const FormTitle = styled.h3`
@@ -148,10 +154,8 @@ const FormButton = styled.button<{ primary?: boolean }>`
   font-size: 1rem;
   font-weight: 600;
   transition: background-color 0.2s ease;
-
   background: ${props => (props.primary ? '#9C49CF' : '#e0e0e0')};
   color: ${props => (props.primary ? 'white' : '#333')};
-
   &:hover {
     background: ${props => (props.primary ? '#800080' : '#c0c0c0')};
   }
@@ -175,7 +179,6 @@ const AddEquipmentButton = styled.button`
   }
 `;
 
-// New Styled Components for the Add Equipment Modal
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -195,14 +198,14 @@ const ModalContent = styled.div`
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   width: 90%;
-  max-width: 400px; /* Adjusted max-width for the equipment form */
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
 `;
 
-const ModalTitle = styled.h3` /* Moved ModalTitle definition here for clarity */
+const ModalTitle = styled.h3`
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 1.5rem;
@@ -233,14 +236,13 @@ const ModalActions = styled(FormActions)`
 `;
 
 const AddWorkoutPage: React.FC = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [isAddEquipmentModalOpen, setIsAddEquipmentModalOpen] = useState(false);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Logic to handle form submission
     console.log('Exercise/Workout form submitted!');
-    navigate('/workouts'); // Navigate back to workouts page after submission
+    navigate('/workouts');
   };
 
   const handleAddEquipmentClick = () => {
@@ -253,16 +255,13 @@ const AddWorkoutPage: React.FC = () => {
 
   const handleSubmitEquipment = (event: React.FormEvent) => {
     event.preventDefault();
-    // Logic to handle equipment form submission
     console.log('Equipment form submitted!');
     handleCloseAddEquipmentModal();
   };
 
-
   return (
     <MainContainer>
-      <Header /> {/* Using the external Header component */}
-
+      <Header />
       <FormContainer>
         <FormTitle>Add new Exercise</FormTitle>
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -294,7 +293,6 @@ const AddWorkoutPage: React.FC = () => {
               <FormButton primary type="submit">Save</FormButton>
             </FormActions>
           </FormSection>
-
           <FormSection>
             <FormSectionTitle>Workout Information</FormSectionTitle>
             <FormGroup>
@@ -330,7 +328,7 @@ const AddWorkoutPage: React.FC = () => {
               <UploadPlaceholder>🖼️</UploadPlaceholder>
               <input type="file" id="uploadImage" accept="image/*" style={{ display: 'none' }} />
             </FormGroup>
-            <AddEquipmentButton type="button" onClick={handleAddEquipmentClick}> {/* Added onClick */}
+            <AddEquipmentButton type="button" onClick={handleAddEquipmentClick}>
               <span role="img" aria-label="add">➕</span> Add equipment
             </AddEquipmentButton>
             <FormActions>
@@ -340,8 +338,6 @@ const AddWorkoutPage: React.FC = () => {
           </FormSection>
         </form>
       </FormContainer>
-
-      {/* Add Equipment Modal */}
       {isAddEquipmentModalOpen && (
         <ModalOverlay>
           <ModalContent>

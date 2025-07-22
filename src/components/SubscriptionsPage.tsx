@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from './Header'; // Import the Header component
+import Header from './Header';
 
 // Styled Components for the Subscriptions Page
 const MainContainer = styled.div`
-  margin-left: 250px; /* Accounts for the fixed sidebar width */
-  padding: 2rem;
+  margin-left: 250px; /* Matches Sidebar width */
+  padding: 2rem 2rem 2rem 1rem; /* Reduced left padding to 1rem */
   background: #f5f5f5;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif; /* Ensure consistent font */
+  font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    margin-left: 0; /* Remove margin for mobile */
+    padding: 1rem;
+  }
 `;
 
 const SectionContainer = styled.div`
@@ -34,7 +40,7 @@ const SectionTitle = styled.h3`
 `;
 
 const AddSubscriptionButton = styled.button`
-  background: #9C49CF; /* Purple color */
+  background: #9C49CF;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -46,21 +52,21 @@ const AddSubscriptionButton = styled.button`
   align-items: center;
   gap: 0.5rem;
   &:hover {
-    background: #800080; /* Darker purple on hover */
+    background: #800080;
   }
 `;
 
 const PlanGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid for plans */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
 `;
 
 const PlanCard = styled.div`
-  background: #f3e8ff; /* Light purple background */
+  background: #f3e8ff;
   padding: 1.25rem;
   border-radius: 8px;
-  border: 1px solid #e9d5ff; /* Light purple border */
+  border: 1px solid #e9d5ff;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -72,7 +78,7 @@ const PlanDetails = styled.div`
 `;
 
 const PlanIcon = styled.div`
-  background: #9C49CF; /* Purple background */
+  background: #9C49CF;
   color: white;
   border-radius: 50%;
   padding: 0.5rem;
@@ -125,7 +131,6 @@ const ActionIcon = styled.button`
 `;
 
 const PaymentInfoTableSection = styled(SectionContainer)`
-  /* Inherits styles from SectionContainer */
 `;
 
 const SearchInputContainer = styled.div`
@@ -135,22 +140,22 @@ const SearchInputContainer = styled.div`
 `;
 
 const SearchInput = styled.input`
-  padding: 0.6rem 1rem 0.6rem 2.5rem; /* Left padding for icon */
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
   border-radius: 6px;
-  background: #e5e7eb; /* Gray-200 */
+  background: #e5e7eb;
   border: none;
   outline: none;
-  color: #374151; /* Gray-700 */
-  width: 200px; /* Adjust width as needed */
+  color: #374151;
+  width: 200px;
   &::placeholder {
-    color: #6b7280; /* Gray-500 */
+    color: #6b7280;
   }
 `;
 
 const SearchIcon = styled.span`
   position: absolute;
   left: 1rem;
-  color: #6b7280; /* Gray-500 */
+  color: #6b7280;
 `;
 
 const StyledTable = styled.table`
@@ -159,15 +164,15 @@ const StyledTable = styled.table`
   th, td {
     padding: 0.75rem;
     text-align: left;
-    border-bottom: 1px solid #e5e7eb; /* Gray-200 */
+    border-bottom: 1px solid #e5e7eb;
   }
   th {
-    background: #f3e8ff; /* Purple-100 */
-    color: #374151; /* Gray-700 */
+    background: #f3e8ff;
+    color: #374151;
     font-weight: 600;
   }
   tbody tr:nth-child(even) {
-    background: #fbf5fe; /* Lighter purple for even rows */
+    background: #fbf5fe;
   }
   tbody tr:last-child {
     border-bottom: none;
@@ -178,15 +183,15 @@ const StyledTable = styled.table`
 
 const StatusBadge = styled.span<{ type: 'paid' | 'pending' | 'active' | 'expired' }>`
   padding: 0.25rem 0.75rem;
-  border-radius: 9999px; /* Full rounded */
+  border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
   ${props => {
     switch (props.type) {
-      case 'paid': return `background: #d1fae5; color: #065f46;`; // Greenish
-      case 'pending': return `background: #fef3c7; color: #92400e;`; // Yellowish
-      case 'active': return `background: #e9d5ff; color: #800080;`; // Purple
-      case 'expired': return `background: #fee2e2; color: #991b1b;`; // Reddish
+      case 'paid': return `background: #d1fae5; color: #065f46;`;
+      case 'pending': return `background: #fef3c7; color: #92400e;`;
+      case 'active': return `background: #e9d5ff; color: #800080;`;
+      case 'expired': return `background: #fee2e2; color: #991b1b;`;
       default: return `background: #e0e0e0; color: #333;`;
     }
   }}
@@ -205,7 +210,6 @@ const MoreActionsButton = styled.button`
   }
 `;
 
-// New Styled Components for the Add Subscription Modal
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -225,7 +229,7 @@ const ModalContent = styled.div`
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   width: 90%;
-  max-width: 500px; /* Adjusted max-width for the form */
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -292,15 +296,12 @@ const FormButton = styled.button<{ primary?: boolean }>`
   font-weight: 600;
   transition: background-color 0.2s ease;
   margin-top: ${props => (props.primary ? '1.5rem' : '1rem')};
-
   background: ${props => (props.primary ? '#9C49CF' : '#e0e0e0')};
   color: ${props => (props.primary ? 'white' : '#333')};
-
   &:hover {
     background: ${props => (props.primary ? '#800080' : '#c0c0c0')};
   }
 `;
-
 
 const SubscriptionsPage: React.FC = () => {
   const [isAddSubscriptionModalOpen, setIsAddSubscriptionModalOpen] = useState(false);
@@ -325,16 +326,13 @@ const SubscriptionsPage: React.FC = () => {
 
   const handleSubmitSubscription = (event: React.FormEvent) => {
     event.preventDefault();
-    // Logic to handle form submission (e.g., send data to backend)
     console.log('Subscription form submitted!');
     handleCloseAddSubscriptionModal();
   };
 
   return (
     <MainContainer>
-      <Header /> {/* Using the external Header component */}
-
-      {/* Our Subscription Plans Section */}
+      <Header />
       <SectionContainer>
         <SectionHeader>
           <SectionTitle>Our Subscription Plans</SectionTitle>
@@ -346,7 +344,7 @@ const SubscriptionsPage: React.FC = () => {
           {subscriptionPlans.map((plan, index) => (
             <PlanCard key={index}>
               <PlanDetails>
-                <PlanIcon>📋</PlanIcon> {/* Icon for plan */}
+                <PlanIcon>📋</PlanIcon>
                 <PlanName>{plan.name}</PlanName>
               </PlanDetails>
               <PlanPricing>
@@ -363,8 +361,6 @@ const SubscriptionsPage: React.FC = () => {
           ))}
         </PlanGrid>
       </SectionContainer>
-
-      {/* Payment Information Section */}
       <PaymentInfoTableSection>
         <SectionHeader>
           <SectionTitle>Payment Information</SectionTitle>
@@ -395,15 +391,13 @@ const SubscriptionsPage: React.FC = () => {
                 <td><StatusBadge type={item.payment.toLowerCase() as any}>{item.payment}</StatusBadge></td>
                 <td><StatusBadge type={item.status.toLowerCase() as any}>{item.status}</StatusBadge></td>
                 <td>
-                  <MoreActionsButton>⋮</MoreActionsButton> {/* Three dots icon */}
+                  <MoreActionsButton>⋮</MoreActionsButton>
                 </td>
               </tr>
             ))}
           </tbody>
         </StyledTable>
       </PaymentInfoTableSection>
-
-      {/* Add Subscription Modal */}
       {isAddSubscriptionModalOpen && (
         <ModalOverlay>
           <ModalContent>
@@ -422,7 +416,7 @@ const SubscriptionsPage: React.FC = () => {
                 <TextArea id="description" placeholder="What's included in this plan?" required />
               </FormGroup>
               <FormButton primary type="submit">Add Subscription</FormButton>
-              <FormButton type="button" onClick={handleCloseAddSubscriptionModal}>Cancel</FormButton> {/* Changed "Update" to "Cancel" for add form */}
+              <FormButton type="button" onClick={handleCloseAddSubscriptionModal}>Cancel</FormButton>
             </form>
           </ModalContent>
         </ModalOverlay>
