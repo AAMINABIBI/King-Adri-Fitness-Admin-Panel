@@ -78,7 +78,7 @@ form {
 .login-image-section {
   flex: 1;
   background: url('../assets/hero_image.png') no-repeat center center;
-  background-size: cover;
+  background-size: contain; /* Ensures full image is visible without cropping */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -148,11 +148,12 @@ form {
   .login-image-section {
     flex: none;
     width: 100%;
-    min-height: 50vh;
+    height: 200px; /* Fixed height for mobile to ensure image visibility */
   }
 
   .login-image-section {
-    background-position: center;
+    background: url('../assets/hero_image.png') no-repeat center center;
+    background-size: contain; /* Ensure full image visibility on mobile */
   }
 
   .quote {
